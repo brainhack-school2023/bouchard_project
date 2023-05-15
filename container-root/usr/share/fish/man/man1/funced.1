@@ -1,0 +1,27 @@
+.TH "funced" 1 "Thu May 26 2016" "Version 2.3.0" "fish" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+\fBfunced\fP -- edit a function interactively 
+
+.PP
+.SS "Synopsis"
+.PP
+.nf
+
+\fBfunced\fP [OPTIONS] NAME
+.fi
+.PP
+.SS "Description"
+\fCfunced\fP provides an interface to edit the definition of the function \fCNAME\fP\&.
+.PP
+If the \fC$VISUAL\fP environment variable is set, it will be used as the program to edit the function\&. If \fC$VISUAL\fP is unset but \fC$EDITOR\fP is set, that will be used\&. Otherwise, a built-in editor will be used\&.
+.PP
+If there is no function called \fCNAME\fP a new function will be created with the specified name
+.PP
+.IP "\(bu" 2
+\fC-e command\fP or \fC--editor command\fP Open the function body inside the text editor given by the command (for example, 'vi')\&. The command 'fish' will use the built-in editor\&.
+.IP "\(bu" 2
+\fC-i\fP or \fC--interactive\fP Open function body in the built-in editor\&. 
+.PP
+

@@ -1,0 +1,31 @@
+.TH "fish_indent" 1 "Thu May 26 2016" "Version 2.3.0" "fish" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+\fBfish_indent\fP -- indenter and prettifier 
+
+.PP
+.SS "Synopsis"
+.PP
+.nf
+
+\fBfish_indent\fP [OPTIONS]
+.fi
+.PP
+.SS "Description"
+\fCfish_indent\fP is used to indent a piece of fish code\&. \fCfish_indent\fP reads commands from standard input and outputs them to standard output\&.
+.PP
+The following options are available:
+.PP
+.IP "\(bu" 2
+\fC-d\fP or \fC--dump\fP dumps information about the parsed fish commands to stderr
+.IP "\(bu" 2
+\fC-i\fP or \fC--no-indent\fP do not indent commands; only reformat to one job per line
+.IP "\(bu" 2
+\fC-v\fP or \fC--version\fP displays the current fish version and then exits
+.IP "\(bu" 2
+\fC--ansi\fP colorizes the output using ANSI escape sequences, appropriate for the current $TERM, using the colors defined in the environment (such as \fC$fish_color_command\fP)\&.
+.IP "\(bu" 2
+\fC--html\fP outputs HTML, which supports syntax highlighting if the appropriate CSS is defined\&. The CSS class names are the same as the variable names, such as \fCfish_color_command\fP 
+.PP
+

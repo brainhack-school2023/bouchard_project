@@ -1,0 +1,61 @@
+.TH "history" 1 "Thu May 26 2016" "Version 2.3.0" "fish" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+\fBhistory\fP -- Show and manipulate command history 
+
+.PP
+.SS "Synopsis"
+.PP
+.nf
+
+\fBhistory\fP ( --merge | --save | --clear )
+\fBhistory\fP ( --search | --delete ) [ --prefix 'prefix string' | --contains 'search string' ]
+.fi
+.PP
+.SS "Description"
+\fChistory\fP is used to list, search and delete the history of commands used\&.
+.PP
+The following options are available:
+.IP "\(bu" 2
+\fC--merge\fP immediately incorporates history changes from other sessions\&. Ordinarily \fCfish\fP ignores history changes from sessions started after the current one\&. This command applies those changes immediately\&.
+.IP "\(bu" 2
+\fC--save\fP saves all changes in the history file\&. The shell automatically saves the history file; this option is provided for internal use\&.
+.IP "\(bu" 2
+\fC--clear\fP clears the history file\&. A prompt is displayed before the history is erased\&.
+.IP "\(bu" 2
+\fC--search\fP returns history items in keeping with the \fC--prefix\fP or \fC--contains\fP options\&.
+.IP "\(bu" 2
+\fC--delete\fP deletes history items\&.
+.IP "\(bu" 2
+\fC--prefix\fP searches or deletes items in the history that begin with the specified text string\&.
+.IP "\(bu" 2
+\fC--contains\fP searches or deletes items in the history that contain the specified text string\&.
+.PP
+.PP
+If \fC--search\fP is specified without \fC--contains\fP or \fC--prefix\fP, \fC--contains\fP will be assumed\&.
+.PP
+If \fC--delete\fP is specified without \fC--contains\fP or \fC--prefix\fP, only a history item which exactly matches the parameter will be erased\&. No prompt will be given\&. If \fC--delete\fP is specified with either of these parameters, an interactive prompt will be displayed before any items are deleted\&.
+.SS "Example"
+.PP
+.nf
+
+\fBhistory\fP --clear
+  Deletes all history items
+.fi
+.PP
+.PP
+.PP
+.nf
+\fBhistory\fP --search --contains 'foo'
+  Outputs a list of all previous commands containing the string 'foo'\&.
+.fi
+.PP
+.PP
+.PP
+.nf
+\fBhistory\fP --delete --prefix 'foo'
+  Interactively deletes the record of previous commands which start with 'foo'\&.
+.fi
+.PP
+ 

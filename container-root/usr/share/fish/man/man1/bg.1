@@ -1,0 +1,20 @@
+.TH "bg" 1 "Thu May 26 2016" "Version 2.3.0" "fish" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+\fBbg\fP -- send jobs to background 
+
+.PP
+.SS "Synopsis"
+.PP
+.nf
+
+\fBbg\fP [PID\&.\&.\&.]
+.fi
+.PP
+.SS "Description"
+\fCbg\fP sends \fCjobs\fP to the background, resuming them if they are stopped\&. A background job is executed simultaneously with fish, and does not have access to the keyboard\&. If no job is specified, the last job to be used is put in the background\&. If PID is specified, the jobs with the specified process group IDs are put in the background\&.
+.PP
+The PID of the desired process is usually found by using \fCprocess expansion\fP\&.
+.SS "Example"
+\fCbg %1\fP will put the job with job ID 1 in the background\&. 

@@ -1,0 +1,20 @@
+.TH "fg" 1 "Thu May 26 2016" "Version 2.3.0" "fish" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+\fBfg\fP -- bring job to foreground 
+
+.PP
+.SS "Synopsis"
+.PP
+.nf
+
+\fBfg\fP [PID]
+.fi
+.PP
+.SS "Description"
+\fCfg\fP brings the specified \fCjob\fP to the foreground, resuming it if it is stopped\&. While a foreground job is executed, fish is suspended\&. If no job is specified, the last job to be used is put in the foreground\&. If PID is specified, the job with the specified group ID is put in the foreground\&.
+.PP
+The PID of the desired process is usually found by using \fCprocess expansion\fP\&.
+.SS "Example"
+\fCfg %1\fP will put the job with job ID 1 in the foreground\&. 

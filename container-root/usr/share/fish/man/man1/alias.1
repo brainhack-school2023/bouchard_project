@@ -1,0 +1,65 @@
+.TH "alias" 1 "Thu May 26 2016" "Version 2.3.0" "fish" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+\fBalias\fP -- create a function 
+
+.PP
+.SS "Synopsis"
+.PP
+.nf
+
+\fBalias\fP NAME DEFINITION
+\fBalias\fP NAME=DEFINITION
+.fi
+.PP
+.SS "Description"
+\fCalias\fP is a simple wrapper for the \fCfunction\fP builtin\&. It exists for backwards compatibility with Posix shells\&. For other uses, it is recommended to define a \fCfunction\fP\&.
+.PP
+\fCfish\fP does not keep track of which functions have been defined using \fCalias\fP\&. They must be erased using \fCfunctions -e\fP\&.
+.PP
+.IP "\(bu" 2
+\fCNAME\fP is the name of the alias
+.IP "\(bu" 2
+\fCDEFINITION\fP is the actual command to execute\&. The string \fC$argv\fP will be appended\&.
+.PP
+.PP
+You cannot create an alias to a function with the same name\&.
+.PP
+Note that spaces need to be escaped in the call to alias just like in the commandline \fIeven inside the quotes\fP\&.
+.SS "Example"
+The following code will create \fCrmi\fP, which runs \fCrm\fP with additional arguments on every invocation\&.
+.PP
+.PP
+.nf
+
+\fBalias\fP rmi 'rm -i'
+.fi
+.PP
+.PP
+.PP
+.nf
+  This is equivalent to entering the following function:
+.fi
+.PP
+.PP
+.PP
+.nf
+\fBfunction\fP rmi
+    rm -i $argv
+\fBend\fP
+.fi
+.PP
+.PP
+.PP
+.nf
+  This needs to have the spaces escaped or 'Chrome\&.app\&.\&.\&.' will be seen as an argument to '/Applications/Google':
+.fi
+.PP
+.PP
+.PP
+.nf
+\fBalias\fP chrome='/Applications/Google\\ Chrome\&.app/Contents/MacOS/Google\\ Chrome banana'
+.fi
+.PP
+ 

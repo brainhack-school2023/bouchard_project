@@ -1,0 +1,62 @@
+.TH "read" 1 "Thu May 26 2016" "Version 2.3.0" "fish" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+\fBread\fP -- read line of input into variables 
+
+.PP
+.SS "Synopsis"
+.PP
+.nf
+
+\fBread\fP [OPTIONS] [VARIABLES\&.\&.\&.]
+.fi
+.PP
+.SS "Description"
+\fCread\fP reads one line from standard input and stores the result in one or more shell variables\&.
+.PP
+The following options are available:
+.PP
+.IP "\(bu" 2
+\fC-c CMD\fP or \fC--command=CMD\fP sets the initial string in the interactive mode command buffer to \fCCMD\fP\&.
+.IP "\(bu" 2
+\fC-g\fP or \fC--global\fP makes the variables global\&.
+.IP "\(bu" 2
+\fC-l\fP or \fC--local\fP makes the variables local\&.
+.IP "\(bu" 2
+\fC-m NAME\fP or \fC--mode-name=NAME\fP specifies that the name NAME should be used to save/load the history file\&. If NAME is fish, the regular fish history will be available\&.
+.IP "\(bu" 2
+\fC-n NCHARS\fP or \fC--nchars=NCHARS\fP causes \fCread\fP to return after reading NCHARS characters rather than waiting for a complete line of input\&.
+.IP "\(bu" 2
+\fC-p PROMPT_CMD\fP or \fC--prompt=PROMPT_CMD\fP uses the output of the shell command \fCPROMPT_CMD\fP as the prompt for the interactive mode\&. The default prompt command is \fCset_color green; echo read; set_color normal; echo '> '\fP\&.
+.IP "\(bu" 2
+\fC-R RIGHT_PROMPT_CMD\fP or \fC--right-prompt=RIGHT_PROMPT_CMD\fP uses the output of the shell command \fCRIGHT_PROMPT_CMD\fP as the right prompt for the interactive mode\&. There is no default right prompt command\&.
+.IP "\(bu" 2
+\fC-s\fP or \fC--shell\fP enables syntax highlighting, tab completions and command termination suitable for entering shellscript code in the interactive mode\&.
+.IP "\(bu" 2
+\fC-u\fP or \fC--unexport\fP prevents the variables from being exported to child processes (default behaviour)\&.
+.IP "\(bu" 2
+\fC-U\fP or \fC--universal\fP causes the specified shell variable to be made universal\&.
+.IP "\(bu" 2
+\fC-x\fP or \fC--export\fP exports the variables to child processes\&.
+.IP "\(bu" 2
+\fC-a\fP or \fC--array\fP stores the result as an array\&.
+.IP "\(bu" 2
+\fC-z\fP or \fC--null\fP reads up to NUL instead of newline\&. Disables interactive mode\&.
+.PP
+.PP
+\fCread\fP reads a single line of input from stdin, breaks it into tokens based on the \fCIFS\fP shell variable, and then assigns one token to each variable specified in \fCVARIABLES\fP\&. If there are more tokens than variables, the complete remainder is assigned to the last variable\&. As a special case, if \fCIFS\fP is set to the empty string, each character of the input is considered a separate token\&.
+.PP
+If \fC-a\fP or \fC--array\fP is provided, only one variable name is allowed and the tokens are stored as an array in this variable\&.
+.PP
+See the documentation for \fCset\fP for more details on the scoping rules for variables\&.
+.SS "Example"
+The following code stores the value 'hello' in the shell variable \fC$foo\fP\&.
+.PP
+.PP
+.nf
+
+\fBecho\fP hello|\fBread\fP foo
+.fi
+.PP
+ 

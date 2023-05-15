@@ -1,0 +1,16 @@
+.TH "suspend" 1 "Thu May 26 2016" "Version 2.3.0" "fish" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+\fBsuspend\fP -- suspend the current shell 
+
+.PP
+.SS "Synopsis"
+.PP
+.nf
+
+\fBsuspend\fP [--force]
+.fi
+.PP
+.SS "Description"
+\fCsuspend\fP suspends execution of the current shell by sending it a SIGTSTP signal, returning to the controlling process\&. It can be resumed later by sending it a SIGCONT\&. In order to prevent suspending a shell that doesn't have a controlling process, it will not suspend a the shell if it is a login shell or if \fC$SHLVL\fP is less \fC$suspend_minimum_SHLVL\fP, which defaults to three\&. This test is skipped if the \fC--force\fP option is given or the shell is not interactive\&. 
