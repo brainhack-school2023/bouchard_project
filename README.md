@@ -1,9 +1,104 @@
-# bouchard_project
+---
+type: "project" # DON'T TOUCH THIS ! :)
+date: "2023-05-19" # Date you first upload your project.
+# Title of your project (we like creative title)
+title: "Spinal Cord Segmentation Generalizable Across Datasets"
 
-Hi, I am Louis, from Montreal, first year PhD student at Polytechnique Montreal working on MRI data for multiple sclerosis lesion segmentation 🙂
+# List the names of the collaborators within the [ ]. If alone, simple put your name within []
+names: []
 
+# Your project GitHub repository URL
+github_repo: https://github.com/brainhack-school2023/bouchard_project
 
-<a href="https://github.com/louisfb01">
-   <img src="https://avatars.githubusercontent.com/u/70274208?v=4?s=100" width="100px;" alt=""/>
-   <br /><sub><b>Louis-François Bouchard</b></sub>
-</a>
+# If you are working on a project that has website, indicate the full url including "https://" below or leave it empty.
+# website:
+
+# List +- 4 keywords that best describe your project within []. Note that the project summary also involves a number of key words. Those are listed on top of the [github repository](https://github.com/PSY6983-2021/project_template), click `manage topics`.
+# Please only lowercase letters
+tags: [mri, segmentation, spinal cord, python]
+
+# Summarize your project in < ~75 words. This description will appear at the top of your page and on the list page with other projects..
+
+summary: "My idea is to train a deep learning model on multiple (3) spinal cord segmentation datasets to improve generalizability to new contrasts, vendors, pathologies, ...
+
+My project aims to train the nnU-Net model architecture, a state-of-the-art deep learning architecture for biomedical segmentation, on three aggregated datasets and compare its generalizability capabilities with specific models trained on each dataset. I will conclude by comparing the two approaches on a fourth dataset outside of the training domain."
+
+# If you want to add a cover image (listpage and image in the right), add it to your directory and indicate the name
+# below with the extension.
+image: "cover_image.png"
+---
+<!-- This is an html comment and this won't appear in the rendered page. You are now editing the "content" area, the core of your description. Everything that you can do in markdown is allowed below. We added a couple of comments to guide your through documenting your progress. -->
+
+## Project definition
+
+### Background
+
+Spinal cord segmentation is the process of annotating the spinal cord area in MRI images. This is clinically relevant notably to compute cross-sectional area for the diagnosis and monitoring of neurodegenerative diseases such as multiple sclerosis.
+
+Performing automatic spinal cord segmentation is complicated even with deep learning methods due to the wide range of MRIs that can be produced from various contrasts, machine vendors and pathologies of the patient. This results in very different output images that no model can handle yet.
+
+Typically, we use one model per data sub-set, like a specific contrast, and end up with N models where we select the optimal model for new images. This is not reliable and scalable.
+
+My goal is to build a more general model to automatically perform spinal cord segmentation across contrasts, vendors and pathologies.
+
+### Tools
+
+Main tools: Python/Pytorch/Git/ssh/Jupyter Notebooks
+
+Most important: nnU-Net -> a state-of-the-art “self-configuring method for deep learning-based biomedical image segmentation”.
+
+### Methodology
+Train and compare 2 frameworks (individual models vs. general model) for performing automatic spinal cord segmentation.
+
+### Data
+
+Various (4) Spinal Cord MRI datasets at Neuropoly with available manual segmentation.
+
+Including:
+
+* Spine Generic Public Database* (multi-subject), n=244, 3 vendors, 6 contrasts, pathology: Mild Compression, Healthy Controls.
+* Basel-mp2rage, n=283, 1 contrast, pathology: Multiple Sclerosis (180), Healthy Controls (103).
+* INSPIRED, n=79, 5 contrasts, pathology: Degenerative Cervical Myelopathy (38), Spinal Cord Injury, Healthy Controls.
+* SCI-Colorado, n=80, 2 contrasts, pathology: Spinal Cord Injury.
+Multiple contrasts, conditions, vendors… 👍
+
+**Cohen-Adad, J., Alonso-Ortiz, E., Abramovic, M., Arneitz, C., Atcheson, N., Barlow, L., Barry, R.L., Barth, M., Battiston, M., Büchel, C., et al.: Open-access quantitative mri data of the spinal cord and reproducibility across participants, sites and manufacturers. Scientific data 8(1), 219 (2021)*
+
+### Objectives
+
+* Create a script for converting N BIDS datasets into one large “nnU-Net-ready” dataset train/test split.
+* Compare a general model to specific models for spinal cord segmentation on the datasets’ test sets.
+* Test the resulting 2 frameworks on a fourth dataset to demonstrate the generalizability capabilities of the larger model.
+
+### Deliverables
+
+* A Github repository with codes and scripts to reproduce training and testing.
+* A jupyter notebook of the analysis codes and visualisations for comparing the results.
+* Documentation.
+* Model checkpoints for the nnUnet models trained on all 3 datasets.
+
+## Results
+
+### Progress overview
+
+The project was initiated by Louis-François Bouchard, based on the existing BrainHack template. I will start from existing scripts for the nnU-Net method and adapt them for my needs.
+
+### Tools I learned during this project
+
+ * **TODO** TODO
+ * **TODO-** TODO
+ * **TODO** TODO
+
+### Results
+
+#### Deliverable 1: TODO
+
+TODO
+
+#### Deliverable 2: TODO
+
+TODO
+
+## Conclusion and acknowledgement
+
+TODO
