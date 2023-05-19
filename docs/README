@@ -1,0 +1,39 @@
+# Reproducing results from this repository
+
+This is a clear `README` file to reproduce the results using the rest of the documentation present in this directory for more detailed instructions.
+
+## Code organization
+
+The codes are written in `python` and using external libraries listed in the `requirements` file.
+
+We will assume the project is run on a Linux operating system with available GPUs to train the models.
+
+## Reproduce training
+
+### Installation
+1. Create a conda environment.
+`conda create -n nnunet_env python=3.9`
+`conda activate nnunet_env`
+
+2. Install the requirements running the command below in the home directory of this github repository.
+
+
+### Data and model preparation
+The source data are from:
+1. The [spine-generic multi-subject](https://github.com/spine-generic/data-multi-subject/).
+2. 
+3. 
+4. 
+
+#### Preparing nnU-Net data
+1. 
+
+#### Setup of the nnU-Net architecture
+1. 
+
+### Training
+1. 
+
+### Testing
+1. 
+
