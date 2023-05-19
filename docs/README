@@ -11,12 +11,13 @@ We will assume the project is run on a Linux operating system with available GPU
 ## Reproduce training
 
 ### Installation
-1. Create a conda environment.
-`conda create -n nnunet_env python=3.9`
+Required: Conda.
+1. Create a conda environment in your terminal using the following commands.
+`conda create -n nnunet_env python=3.9.16`
 `conda activate nnunet_env`
 
 2. Install the requirements running the command below in the home directory of this github repository.
-
+`pip install -r requirements.txt`
 
 ### Data and model preparation
 The source data are from:
