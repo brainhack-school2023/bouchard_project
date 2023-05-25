@@ -19,22 +19,72 @@ Required: Conda.
 2. Install the requirements running the command below in the home directory of this github repository.
 `pip install -r requirements.txt`
 
+3. nnU-Net needs to know where you intend to save raw data, preprocessed data and trained models. For this you need to set a few environment variables. Please follow the instructions [here](https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/set_environment_variables.md).
+
+4. (OPTIONAL) Install [hiddenlayer](https://github.com/waleedka/hiddenlayer). hiddenlayer enables nnU-net to generate
+   plots of the network topologies it generates (see [Model training](how_to_use_nnunet.md#model-training)). 
+To install hiddenlayer,
+   run the following command:
+    ```bash
+    pip install --upgrade git+https://github.com/FabianIsensee/hiddenlayer.git
+    ```
+
 ### Data and model preparation
 The source data are from:
-1. The [spine-generic multi-subject](https://github.com/spine-generic/data-multi-subject/).
-2. 
-3. 
-4. 
+1. The [spine-generic multi-subject](https://github.com/spine-generic/data-multi-subject/) dataset.
+2. The INSPIRED dataset, `duke:mri/INSPIRED`.
+3. The [SCI-Colorado](https://github.com/ivadomed/model_seg_sci) dataset, `data:datasets/sci-colorado`.
+4. The [Basel-mp2rage](https://github.com/ivadomed/model_seg_ms_mp2rage) dataset, `git@data:datasets/basel-mp2rage`.
 
-#### Preparing nnU-Net data
-1. 
+#### Preparing nnU-Net data (from BIDS)
+1. Install the BIDS dataset on your machine either through git-annex or downloading it.
+2. Create the required nnunet folders with this architecture, starting with `nnUNet_data` and the 3 folders below inside it:
+    Example tree structure:
+    ```
+    nnUNet_raw/
+    ├── nnUNet_preprocessed
+    ├── nnUNet_raw
+    ├── nnUNet_results
+3. For some datasets using Ivadomed you may require a joblib file. If so, copy it into the script folder of this repository where the `convert_spine-generic_to_nnUNetv2.py` file is located.
+4. Convert your BIDS data into nnunet-ready format!
+    * Go into the script folder.
+    * run the following command adapting the arguments to your machine and dataset.
 
-#### Setup of the nnU-Net architecture
-1. 
+    ```bash
+    python convert_spine-generic_to_nnUNetv2.py --path-data <path-to-the-copied-dataset>  --path-out ${nnUNet_raw} --path-joblib .  -dname spineGNoCropSoftAvgBin -dnum <dnum> --label-type soft
+    ```
+
+    NOTES:
+    - `dname` - is the dataset name that nnUNet refers
+    - `dnum` or `dataset-number` - is the number associated with the dataset name. The name and number can be anything. 
+    - `label-type` - is the type of labels to be used for training. The original BIDS dataset has both binary (hard) and averaged (soft) labels. Setting this value to `soft` will use the averaged labels. Setting this value to `hard` will use the binary labels.
+    ls
+
+5. Verify that he dataset was converted correctly using this command:
+```bash
+nnUNetv2_plan_and_preprocess -d <dnum> --verify_dataset_integrity
+```
+
+<!-- #### Setup of the nnU-Net architecture
+1.  -->
 
 ### Training
-1. 
+1. To train the model, run the following command:
+
+```bash
+CUDA_VISIBLE_DEVICES=X nnUNetv2_train <dnum> 3d_fullres 0
+```
+
+This runs the full-resolution 3D model on fold 0 of the dataset.
 
 ### Testing
-1. 
+1. Once training is done, run the following command to test the model:
+
+```bash
+CUDA_VISIBLE_DEVICES=X nnUNetv2_predict -i ${nnUNet_raw}/Dataset713_spineGNoCropSoftAvgBin/imagesTs -o <path-to-nnunet-folder>/nnUNet_results/<dnum_and_dataset_name>/test -d <dnum> -f 0 -c 3d_fullres
+```
+
+This commands runs the inference on the test set specified by the `imagesTs/` folder and saves the results in the `test/` folder in the results corresponding to the dataset. An example of `<dnum_and_dataset_name>` is `Dataset713_spineGNoCropSoftAvgBin`.
+
+
 
