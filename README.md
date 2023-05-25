@@ -102,3 +102,9 @@ TODO
 ## Conclusion and acknowledgement
 
 TODO
+
+## TMP section - TO DO:
+
+[x] Prepare Spine Generic NNunet dataset
+[] tmp
+[] tmp
