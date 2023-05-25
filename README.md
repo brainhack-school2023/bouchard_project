@@ -105,6 +105,26 @@ TODO
 
 ## TMP section - TO DO:
 
-[x] Prepare Spine Generic NNunet dataset
-[] tmp
-[] tmp
+- [ ] Prepare Spine Generic dataset for nnU-Net.
+- [ ] Prepare Basel-mp2rage dataset for nnU-Net.
+- [ ] Prepare INSPIRED dataset for nnU-Net.
+- [ ] Prepare SCI-Colorado dataset for nnU-Net.
+- [ ] Merge + prepare Spine Generic, INSPIRED, SCI-Colorado datasets into one nnunet dataset.
+- [ ] Clean script to merge datasets + add doc.
+- [ ] Run nnunet preprocessing on Spine Generic.
+- [ ] Run nnunet preprocessing on SCI-Colorado.
+- [ ] Run nnunet preprocessing on INSPIRED.
+- [ ] Run nnunet preprocessing on merged daatset.
+- [ ] Train single model on SCI-Colorado.
+- [ ] Train single model on INSPIRED.
+- [ ] Train single model on Spine Generic.
+- [ ] Train large nnunet on merged dataset.
+- [ ] Test all models on INSPIRED.
+- [ ] Test all models on SCI-Colorado
+- [ ] Test all models on Spine Generic
+- [ ] Test all models on Basel-mp2rage
+- [ ] Build qualitative and quantitative analysis notebook.
+- [ ] Work on presentation.
+- [ ] Clean code.
+- [ ] Improve documentation to reproduce everything.
+- [ ] Write project report.
