@@ -84,7 +84,7 @@ if __name__ == '__main__':
     train_subjects, test_subjects = [], []
     # load information from the joblib to match train and test subjects
     joblib_file = os.path.join(args.path_joblib, 'split_datasets_all_seed=15.joblib')
-    splits = joblib.load("split_datasets_all_seed=15.joblib")
+    splits = joblib.load(joblib_file)
     for test_sub in splits['test']:
         test_sub_name = test_sub.split('_')[0]  # get only the subject name
         if test_sub_name in subjects:
@@ -141,8 +141,9 @@ if __name__ == '__main__':
                     os.symlink(os.path.abspath(subject_image_file), subject_image_file_nnunet)
                     os.symlink(os.path.abspath(subject_label_file), subject_label_file_nnunet)
 
-                    # binarize the label file
-                    binarize_label(subject_image_file_nnunet, subject_label_file_nnunet)
+                    if 'SoftAvg' in args.dataset_name:
+                        # binarize the label file
+                        binarize_label(subject_image_file_nnunet, subject_label_file_nnunet)
 
                     # increment the counters
                     train_ctr += 1
@@ -173,8 +174,9 @@ if __name__ == '__main__':
                     os.symlink(os.path.abspath(subject_image_file), subject_image_file_nnunet)
                     os.symlink(os.path.abspath(subject_label_file), subject_label_file_nnunet)
 
-                    # binarize the label file
-                    binarize_label(subject_image_file_nnunet, subject_label_file_nnunet)
+                    if 'SoftAvg' in args.dataset_name:
+                        # binarize the label file
+                        binarize_label(subject_image_file_nnunet, subject_label_file_nnunet)
 
                     # increment the counters
                     train_ctr += 1
@@ -213,8 +215,9 @@ if __name__ == '__main__':
                     os.symlink(os.path.abspath(subject_image_file), subject_image_file_nnunet)
                     os.symlink(os.path.abspath(subject_label_file), subject_label_file_nnunet)
 
-                    # binarize the label file
-                    binarize_label(subject_image_file_nnunet, subject_label_file_nnunet)
+                    if 'SoftAvg' in args.dataset_name:
+                        # binarize the label file
+                        binarize_label(subject_image_file_nnunet, subject_label_file_nnunet)
 
                     # increment the counters
                     test_ctr += 1
@@ -245,8 +248,9 @@ if __name__ == '__main__':
                     os.symlink(os.path.abspath(subject_image_file), subject_image_file_nnunet)
                     os.symlink(os.path.abspath(subject_label_file), subject_label_file_nnunet)
 
-                    # binarize the label file
-                    binarize_label(subject_image_file_nnunet, subject_label_file_nnunet)
+                    if 'SoftAvg' in args.dataset_name:
+                        # binarize the label file
+                        binarize_label(subject_image_file_nnunet, subject_label_file_nnunet)
 
                     # increment the counters
                     test_ctr += 1
