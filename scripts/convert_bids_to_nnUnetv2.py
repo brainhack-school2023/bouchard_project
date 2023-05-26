@@ -53,7 +53,8 @@ parser.add_argument('--split', nargs='+', required=True, type=float, default=[0.
                     help='Ratios of training (includes validation) and test splits lying between 0-1. Example: --split 0.8 0.2')
 parser.add_argument('--labels-path-name', default='labels', type=str,
                     help='Specify name labels folder in the derivative repository.',)
-
+parser.add_argument('--session-name', default='', type=str,
+                    help='name of the session to add before anat.',)
 
 args = parser.parse_args()
 
@@ -68,7 +69,10 @@ path_out_labelsTr = Path(os.path.join(path_out, 'labelsTr'))
 path_out_labelsTs = Path(os.path.join(path_out, 'labelsTs'))
 
 train_images, train_labels, test_images, test_labels = [], [], [], []
-
+if args.session_name != '':
+    anat_path = args.session_name + '/anat'
+else:
+    anat_path = 'anat'
 
 
 if __name__ == '__main__':
@@ -109,10 +113,11 @@ if __name__ == '__main__':
             internal_ctr = 0
             # loop over all contrasts
             for contrast in args.contrasts:
-
+                if args.session_name != '':
+                    contrast = args.session_name + '_' + contrast
                 if contrast != 'dwi':
-                    subject_images_path = os.path.join(root, subject, 'anat')
-                    subject_labels_path = os.path.join(root, 'derivatives', args.labels_path_name, subject, 'anat')
+                    subject_images_path = os.path.join(root, subject, anat_path)
+                    subject_labels_path = os.path.join(root, 'derivatives', args.labels_path_name, subject, anat_path)
 
                     subject_image_file = os.path.join(subject_images_path, f"{subject}_{contrast}.nii.gz")
                     subject_label_file = os.path.join(subject_labels_path, f"{subject}_{contrast}_{args.label_suffix}.nii.gz")
@@ -173,10 +178,11 @@ if __name__ == '__main__':
             internal_ctr = 0
             # loop over all contrasts
             for contrast in args.contrasts:
-
+                if args.session_name != '':
+                    contrast = args.session_name + '_' + contrast
                 if contrast != 'dwi':
-                    subject_images_path = os.path.join(root, subject, 'anat')
-                    subject_labels_path = os.path.join(root, 'derivatives', args.labels_path_name, subject, 'anat')
+                    subject_images_path = os.path.join(root, subject, anat_path)
+                    subject_labels_path = os.path.join(root, 'derivatives', args.labels_path_name, subject, anat_path)
 
                     subject_image_file = os.path.join(subject_images_path, f"{subject}_{contrast}.nii.gz")
                     subject_label_file = os.path.join(subject_labels_path, f"{subject}_{contrast}_{args.label_suffix}.nii.gz")
