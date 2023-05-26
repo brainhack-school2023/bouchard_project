@@ -51,6 +51,9 @@ parser.add_argument('--seed', default=42, type=int,
 # argument that accepts a list of floats as train val test splits
 parser.add_argument('--split', nargs='+', required=True, type=float, default=[0.8, 0.2],
                     help='Ratios of training (includes validation) and test splits lying between 0-1. Example: --split 0.8 0.2')
+parser.add_argument('--labels-path-name', default='labels', type=str,
+                    help='Specify name labels folder in the derivative repository.',)
+
 
 args = parser.parse_args()
 
@@ -109,7 +112,7 @@ if __name__ == '__main__':
 
                 if contrast != 'dwi':
                     subject_images_path = os.path.join(root, subject, 'anat')
-                    subject_labels_path = os.path.join(root, 'derivatives', 'labels', subject, 'anat')
+                    subject_labels_path = os.path.join(root, 'derivatives', args.labels_path_name, subject, 'anat')
 
                     subject_image_file = os.path.join(subject_images_path, f"{subject}_{contrast}.nii.gz")
                     subject_label_file = os.path.join(subject_labels_path, f"{subject}_{contrast}_{args.label_suffix}.nii.gz")
@@ -137,7 +140,7 @@ if __name__ == '__main__':
 
                 else:
                     subject_images_path = os.path.join(root, subject, 'dwi')
-                    subject_labels_path = os.path.join(root, 'derivatives', 'labels', subject, 'dwi')
+                    subject_labels_path = os.path.join(root, 'derivatives', args.labels_path_name, subject, 'dwi')
 
                     subject_image_file = os.path.join(subject_images_path, f"{subject}_rec-average_{contrast}.nii.gz")
                     subject_label_file = os.path.join(subject_labels_path, f"{subject}_rec-average_{contrast}_{args.label_suffix}.nii.gz")
@@ -173,7 +176,7 @@ if __name__ == '__main__':
 
                 if contrast != 'dwi':
                     subject_images_path = os.path.join(root, subject, 'anat')
-                    subject_labels_path = os.path.join(root, 'derivatives', 'labels', subject, 'anat')
+                    subject_labels_path = os.path.join(root, 'derivatives', args.labels_path_name, subject, 'anat')
 
                     subject_image_file = os.path.join(subject_images_path, f"{subject}_{contrast}.nii.gz")
                     subject_label_file = os.path.join(subject_labels_path, f"{subject}_{contrast}_{args.label_suffix}.nii.gz")
@@ -201,7 +204,7 @@ if __name__ == '__main__':
 
                 else:
                     subject_images_path = os.path.join(root, subject, 'dwi')
-                    subject_labels_path = os.path.join(root, 'derivatives', 'labels', subject, 'dwi')
+                    subject_labels_path = os.path.join(root, 'derivatives', args.labels_path_name, subject, 'dwi')
 
                     subject_image_file = os.path.join(subject_images_path, f"{subject}_rec-average_{contrast}.nii.gz")
                     subject_label_file = os.path.join(subject_labels_path, f"{subject}_rec-average_{contrast}_{args.label_suffix}.nii.gz")

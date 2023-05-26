@@ -53,7 +53,7 @@ parser.add_argument('--dataset-name', '-dname', default='MSSpineLesion', type=st
                     help='Specify the task name - usually the anatomy to be segmented, e.g. Hippocampus',)
 parser.add_argument('--dataset-number', '-dnum', default=501,type=int, 
                     help='Specify the task number, has to be greater than 500 but less than 999. e.g 502')
-parser.add_argument("--contrasts", required=True, nargs="*", help="Contrasts to build our dataset from.")
+# parser.add_argument("--contrasts", required=True, nargs="*", help="Contrasts to build our dataset from.")
 
 args = parser.parse_args()
 
@@ -98,8 +98,8 @@ if __name__ == '__main__':
     # take the remaining subjects as train subjects
     train_subjects = [subject for subject in subjects if subject not in test_subjects]
 
-    # # list of contrasts: T2w, T1w, T2star, MTon, MToff, DWI
-    # contrasts = ['dwi', 'flip-1_mt-on_MTS', 'flip-2_mt-off_MTS', 'T1w', 'T2star', 'T2w']
+    # list of contrasts: T2w, T1w, T2star, MTon, MToff, DWI
+    contrasts = ['dwi', 'flip-1_mt-on_MTS', 'flip-2_mt-off_MTS', 'T1w', 'T2star', 'T2w']
 
     if args.label_type == 'soft':
         logger.info("Using the `labels_softseg` (i.e. averaged soft labels) directory for labels!")
@@ -115,7 +115,7 @@ if __name__ == '__main__':
             
             internal_ctr = 0
             # loop over all contrasts
-            for contrast in args.contrasts:
+            for contrast in contrasts:
                 
                 if contrast != 'dwi':
                     subject_images_path = os.path.join(root, subject, 'anat')
@@ -189,7 +189,7 @@ if __name__ == '__main__':
             
             internal_ctr = 0
             # loop over all contrasts
-            for contrast in args.contrasts:
+            for contrast in contrasts:
                 
                 if contrast != 'dwi':
                     subject_images_path = os.path.join(root, subject, 'anat')

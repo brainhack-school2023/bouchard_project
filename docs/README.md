@@ -51,20 +51,22 @@ The source data are from:
     * run the following command adapting the arguments to your machine and dataset.
 
     ```bash
-    python convert_spine-generic_to_nnUNetv2.py --path-data <path-to-the-copied-dataset> --split 0.8 0.2 --label-suffix seg-manual --contrast T1w T2w --path-out ${nnUNet_raw} -dname spineGNoCropSoftAvgBin -dnum <dnum> --seed <nSeed>
+    python convert_spine-generic_to_nnUNetv2.py --path-data <path-to-the-copied-dataset> --split 0.8 0.2 --label-suffix seg-manual --contrasts T1w T2w --path-out ${nnUNet_raw} -dname spineGNoCropSoftAvgBin -dnum <dnum> --seed <nSeed>
     ```
 
     NOTES:
     - `dname` - is the dataset name that nnUNet refers
     - `dnum` or `dataset-number` - is the number associated with the dataset name. The name and number can be anything. 
+    - `contrasts` are the contrast to be taken for conversion.
+    - `seed` is the seed for the split if you want to keep the same splits for comparing models.
+    - `split` is the training/testing split.
+    - `label-suffix` is the label sufix used in the BIDS dataset, for example it could be something like `seg-manual`. It is the last part of your image name after the contrast.
+    - To work with more than one dataset, simply run this command for all datasets using the same `dname` and `dnum`, and then edit the produced `dataset.json` within the output folder with the correct number of training and testing examples adding all dataset examples.
 
 5. Verify that he dataset was converted correctly using this command:
 ```bash
 nnUNetv2_plan_and_preprocess -d <dnum> --verify_dataset_integrity
 ```
-
-<!-- #### Setup of the nnU-Net architecture
-1.  -->
 
 ### Training
 1. To train the model, run the following command:
