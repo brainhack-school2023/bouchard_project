@@ -1,31 +1,25 @@
 """
-Initial conversion script by Naga Karthik: https://github.com/sct-pipeline/contrast-agnostic-softseg-spinalcord/blob/naga/nnunet/nnUnet/convert_spine-generic_to_nnUNetv2.py 
-Modified by Louis-François Bouchard.
-
 Converts the BIDS-structured spine-generic dataset to the nnUNetv2 dataset format. Full details about 
-the format can be found here: https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/dataset_format.md. It allows to keep a joblib file to later compare with ivadomed models.
-
+the format can be found here: https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/dataset_format.md
 Note that the conversion from BIDS to nnUNet is done using symbolic links to avoid creating multiple copies of the 
 (original) BIDS dataset.
-
 Currently only supports the conversion of a single contrast. In case of multiple contrasts, the script should be 
 modified to include those as well. 
-
 Usage example:
     python convert_spine-generic_to_nnUNetv2.py --path-data /path/to/spine-generic --path-out /path/to/nnunet 
-        --path-joblib /path/to/ivadomed/joblib-file --dataset-name spineGen --dataset-number 701
+        --dataset-name spineGen --dataset-number 701 --split 0.8 0.2
     
 """
 
 import argparse
 import pathlib
 from pathlib import Path
-import joblib
 import json
 import os
 from collections import OrderedDict
 import pandas as pd
 from loguru import logger
+from sklearn.model_selection import train_test_split
 
 import nibabel as nib
 import numpy as np
@@ -33,8 +27,7 @@ import numpy as np
 
 def binarize_label(subject_path, label_path):
     label_npy = nib.load(label_path).get_fdata()
-    threshold = 0.5
-    # threshold = 1e-8
+    threshold = 1e-8
     label_npy = np.where(label_npy > threshold, 1, 0)
     ref = nib.load(subject_path)
     label_bin = nib.Nifti1Image(label_npy, ref.affine, ref.header)
@@ -45,19 +38,24 @@ def binarize_label(subject_path, label_path):
 # parse command line arguments
 parser = argparse.ArgumentParser(description='Convert BIDS-structured dataset to nnUNetV2 database format.')
 parser.add_argument('--path-data', help='Path to BIDS dataset.', required=True)
-parser.add_argument('--label-type', help='Type of label, e.g. soft or hard', required=True,
-                    choices=['soft', 'hard'])
 parser.add_argument('--path-out', help='Path to output directory.', required=True)
-parser.add_argument('--path-joblib', help='Path to joblib file from ivadomed containing the dataset splits.', required=True)
 parser.add_argument('--dataset-name', '-dname', default='MSSpineLesion', type=str,
                     help='Specify the task name - usually the anatomy to be segmented, e.g. Hippocampus',)
+parser.add_argument('--label-suffix', default='seg-manual', type=str,
+                    help='Specify name of the segmentation to use.',)
 parser.add_argument('--dataset-number', '-dnum', default=501,type=int, 
                     help='Specify the task number, has to be greater than 500 but less than 999. e.g 502')
 parser.add_argument("--contrasts", required=True, nargs="*", help="Contrasts to build our dataset from.")
+parser.add_argument('--seed', default=42, type=int, 
+                    help='Seed to be used for the random number generator split into training and test sets.')
+# argument that accepts a list of floats as train val test splits
+parser.add_argument('--split', nargs='+', required=True, type=float, default=[0.8, 0.2],
+                    help='Ratios of training (includes validation) and test splits lying between 0-1. Example: --split 0.8 0.2')
 
 args = parser.parse_args()
 
 root = Path(args.path_data)
+train_ratio, test_ratio = args.split
 path_out = Path(os.path.join(os.path.abspath(args.path_out), f'Dataset{args.dataset_number}_{args.dataset_name}'))
 
 # create individual directories for train and test images and labels
@@ -65,6 +63,9 @@ path_out_imagesTr = Path(os.path.join(path_out, 'imagesTr'))
 path_out_imagesTs = Path(os.path.join(path_out, 'imagesTs'))
 path_out_labelsTr = Path(os.path.join(path_out, 'labelsTr'))
 path_out_labelsTs = Path(os.path.join(path_out, 'labelsTs'))
+
+train_images, train_labels, test_images, test_labels = [], [], [], []
+
 
 
 if __name__ == '__main__':
@@ -76,57 +77,42 @@ if __name__ == '__main__':
     pathlib.Path(path_out_labelsTr).mkdir(parents=True, exist_ok=True)
     pathlib.Path(path_out_labelsTs).mkdir(parents=True, exist_ok=True)
 
+    # set the random number generator seed
+    rng = np.random.default_rng(args.seed)
+
+    # # Get all subjects from participants.tsv
+    # subjects_df = pd.read_csv(os.path.join(root, 'participants.tsv'), sep='\t')
+    # subjects_tsv = subjects_df['participant_id'].values.tolist()
+    # logger.info(f"Total number of subjects in the tsv file: {len(subjects_tsv)}")
+
     # get the list of subjects in the root directory 
     subjects = [subject for subject in os.listdir(root) if subject.startswith('sub-')]
     logger.info(f"Total number of subjects in the root directory: {len(subjects)}")
     # sort the subjects list
     subjects.sort()
 
-    train_subjects, test_subjects = [], []
-    # load information from the joblib to match train and test subjects
-    joblib_file = os.path.join(args.path_joblib, 'split_datasets_all_seed=15.joblib')
-    splits = joblib.load(joblib_file)
-    for test_sub in splits['test']:
-        test_sub_name = test_sub.split('_')[0]  # get only the subject name
-        if test_sub_name in subjects:
-            test_subjects.append(test_sub_name)
-        else:
-            print(f"Subject {test_sub_name} not found in the latest version of the dataset")
-    
-    # remove duplicates because of multiple contrasts
-    test_subjects = sorted(list(set(test_subjects)))
-    # take the remaining subjects as train subjects
-    train_subjects = [subject for subject in subjects if subject not in test_subjects]
+    # Get the training and test splits
+    train_subjects, test_subjects = train_test_split(subjects, test_size=test_ratio, random_state=args.seed)
+    # rng.shuffle(train_subjects)
 
     # # list of contrasts: T2w, T1w, T2star, MTon, MToff, DWI
     # contrasts = ['dwi', 'flip-1_mt-on_MTS', 'flip-2_mt-off_MTS', 'T1w', 'T2star', 'T2w']
-
-    if args.label_type == 'soft':
-        logger.info("Using the `labels_softseg` (i.e. averaged soft labels) directory for labels!")
-        logger.info(f"Soft labels path: {os.path.join(root, 'derivatives', 'labels_softseg')}")
-    else:
-        logger.info("Using the `labels` (i.e. using hard binary labels) directory for labels!")
-        logger.info(f"Hard labels path: {os.path.join(root, 'derivatives', 'labels')}")
 
     train_ctr, test_ctr = 0, 0
     for subject in subjects:
 
         if subject in train_subjects:
-            
+
             internal_ctr = 0
             # loop over all contrasts
             for contrast in args.contrasts:
-                
+
                 if contrast != 'dwi':
                     subject_images_path = os.path.join(root, subject, 'anat')
+                    subject_labels_path = os.path.join(root, 'derivatives', 'labels', subject, 'anat')
+
                     subject_image_file = os.path.join(subject_images_path, f"{subject}_{contrast}.nii.gz")
-                    
-                    if args.label_type == 'soft':
-                        subject_labels_path = os.path.join(root, 'derivatives', 'labels_softseg', subject, 'anat')
-                        subject_label_file = os.path.join(subject_labels_path, f"{subject}_{contrast}_softseg.nii.gz")
-                    elif args.label_type == 'hard':
-                        subject_labels_path = os.path.join(root, 'derivatives', 'labels', subject, 'anat')
-                        subject_label_file = os.path.join(subject_labels_path, f"{subject}_{contrast}_seg-manual.nii.gz")
+                    subject_label_file = os.path.join(subject_labels_path, f"{subject}_{contrast}_{args.label_suffix}.nii.gz")
 
                     # check if both image and label files exist
                     if not (os.path.exists(subject_image_file) and os.path.exists(subject_label_file)):
@@ -142,9 +128,8 @@ if __name__ == '__main__':
                     os.symlink(os.path.abspath(subject_image_file), subject_image_file_nnunet)
                     os.symlink(os.path.abspath(subject_label_file), subject_label_file_nnunet)
 
-                    if 'SoftAvg' in args.dataset_name:
-                        # binarize the label file
-                        binarize_label(subject_image_file_nnunet, subject_label_file_nnunet)
+                    # binarize the label file
+                    binarize_label(subject_image_file_nnunet, subject_label_file_nnunet)
 
                     # increment the counters
                     train_ctr += 1
@@ -152,14 +137,10 @@ if __name__ == '__main__':
 
                 else:
                     subject_images_path = os.path.join(root, subject, 'dwi')
+                    subject_labels_path = os.path.join(root, 'derivatives', 'labels', subject, 'dwi')
+
                     subject_image_file = os.path.join(subject_images_path, f"{subject}_rec-average_{contrast}.nii.gz")
-                    
-                    if args.label_type == 'soft':
-                        subject_labels_path = os.path.join(root, 'derivatives', 'labels_softseg', subject, 'dwi')
-                        subject_label_file = os.path.join(subject_labels_path, f"{subject}_rec-average_{contrast}_softseg.nii.gz")
-                    elif args.label_type == 'hard':
-                        subject_labels_path = os.path.join(root, 'derivatives', 'labels', subject, 'dwi')
-                        subject_label_file = os.path.join(subject_labels_path, f"{subject}_rec-average_{contrast}_seg-manual.nii.gz")
+                    subject_label_file = os.path.join(subject_labels_path, f"{subject}_rec-average_{contrast}_{args.label_suffix}.nii.gz")
 
                     # check if both image and label files exist
                     if not (os.path.exists(subject_image_file) and os.path.exists(subject_label_file)):
@@ -175,9 +156,8 @@ if __name__ == '__main__':
                     os.symlink(os.path.abspath(subject_image_file), subject_image_file_nnunet)
                     os.symlink(os.path.abspath(subject_label_file), subject_label_file_nnunet)
 
-                    if 'SoftAvg' in args.dataset_name:
-                        # binarize the label file
-                        binarize_label(subject_image_file_nnunet, subject_label_file_nnunet)
+                    # binarize the label file
+                    binarize_label(subject_image_file_nnunet, subject_label_file_nnunet)
 
                     # increment the counters
                     train_ctr += 1
@@ -186,21 +166,17 @@ if __name__ == '__main__':
             # print(f"Found {internal_ctr} contrasts for Subject {subject}.")
 
         elif subject in test_subjects:
-            
+
             internal_ctr = 0
             # loop over all contrasts
             for contrast in args.contrasts:
-                
+
                 if contrast != 'dwi':
                     subject_images_path = os.path.join(root, subject, 'anat')
+                    subject_labels_path = os.path.join(root, 'derivatives', 'labels', subject, 'anat')
+
                     subject_image_file = os.path.join(subject_images_path, f"{subject}_{contrast}.nii.gz")
-                    
-                    if args.label_type == 'soft':
-                        subject_labels_path = os.path.join(root, 'derivatives', 'labels_softseg', subject, 'anat')
-                        subject_label_file = os.path.join(subject_labels_path, f"{subject}_{contrast}_softseg.nii.gz")
-                    elif args.label_type == 'hard':
-                        subject_labels_path = os.path.join(root, 'derivatives', 'labels', subject, 'anat')
-                        subject_label_file = os.path.join(subject_labels_path, f"{subject}_{contrast}_seg-manual.nii.gz")
+                    subject_label_file = os.path.join(subject_labels_path, f"{subject}_{contrast}_{args.label_suffix}.nii.gz")
 
                     # check if both image and label files exist
                     if not (os.path.exists(subject_image_file) and os.path.exists(subject_label_file)):
@@ -216,9 +192,8 @@ if __name__ == '__main__':
                     os.symlink(os.path.abspath(subject_image_file), subject_image_file_nnunet)
                     os.symlink(os.path.abspath(subject_label_file), subject_label_file_nnunet)
 
-                    if 'SoftAvg' in args.dataset_name:
-                        # binarize the label file
-                        binarize_label(subject_image_file_nnunet, subject_label_file_nnunet)
+                    # binarize the label file
+                    binarize_label(subject_image_file_nnunet, subject_label_file_nnunet)
 
                     # increment the counters
                     test_ctr += 1
@@ -226,14 +201,10 @@ if __name__ == '__main__':
 
                 else:
                     subject_images_path = os.path.join(root, subject, 'dwi')
+                    subject_labels_path = os.path.join(root, 'derivatives', 'labels', subject, 'dwi')
+
                     subject_image_file = os.path.join(subject_images_path, f"{subject}_rec-average_{contrast}.nii.gz")
-                    
-                    if args.label_type == 'soft':
-                        subject_labels_path = os.path.join(root, 'derivatives', 'labels_softseg', subject, 'dwi')
-                        subject_label_file = os.path.join(subject_labels_path, f"{subject}_rec-average_{contrast}_softseg.nii.gz")
-                    elif args.label_type == 'hard':
-                        subject_labels_path = os.path.join(root, 'derivatives', 'labels', subject, 'dwi')
-                        subject_label_file = os.path.join(subject_labels_path, f"{subject}_rec-average_{contrast}_seg-manual.nii.gz")
+                    subject_label_file = os.path.join(subject_labels_path, f"{subject}_rec-average_{contrast}_{args.label_suffix}.nii.gz")
 
                     # check if both image and label files exist
                     if not (os.path.exists(subject_image_file) and os.path.exists(subject_label_file)):
@@ -249,14 +220,13 @@ if __name__ == '__main__':
                     os.symlink(os.path.abspath(subject_image_file), subject_image_file_nnunet)
                     os.symlink(os.path.abspath(subject_label_file), subject_label_file_nnunet)
 
-                    if 'SoftAvg' in args.dataset_name:
-                        # binarize the label file
-                        binarize_label(subject_image_file_nnunet, subject_label_file_nnunet)
+                    # binarize the label file
+                    binarize_label(subject_image_file_nnunet, subject_label_file_nnunet)
 
                     # increment the counters
                     test_ctr += 1
                     internal_ctr += 1
-        
+
         else:
             print("Skipping file, could not be located in the Train or Test splits split.", subject)
 
@@ -290,7 +260,6 @@ if __name__ == '__main__':
             1: 'CT'
         }
     Note that the channel names may influence the normalization scheme!! Learn more in the documentation.
-
     labels:
         This will tell nnU-Net what labels to expect. Important: This will also determine whether you use region-based training or not.
         Example regular labels:
@@ -317,7 +286,7 @@ if __name__ == '__main__':
         "background": 0,
         "sc-seg": 1,
     }
-    
+
     # Needed for finding the files correctly. IMPORTANT! File endings must match between images and segmentations!
     json_dict['file_ending'] = ".nii.gz"
 
@@ -328,5 +297,3 @@ if __name__ == '__main__':
     dataset_dict_name = f"dataset.json"
     with open(os.path.join(path_out, dataset_dict_name), "w") as outfile:
         outfile.write(json_object)
-
-

@@ -45,20 +45,18 @@ The source data are from:
     ├── nnUNet_preprocessed
     ├── nnUNet_raw
     ├── nnUNet_results
-3. For some datasets using Ivadomed you may require a joblib file. If so, copy it into the script folder of this repository where the `convert_spine-generic_to_nnUNetv2.py` file is located.
+3. For some datasets using Ivadomed you may require a joblib file. If so, copy it into the script folder of this repository where the ` convert_bids_to_nnUnetv2.py` file is located.
 4. Convert your BIDS data into nnunet-ready format!
     * Go into the script folder.
     * run the following command adapting the arguments to your machine and dataset.
 
     ```bash
-    python convert_spine-generic_to_nnUNetv2.py --path-data <path-to-the-copied-dataset>  --path-out ${nnUNet_raw} --path-joblib .  -dname spineGNoCropSoftAvgBin -dnum <dnum> --label-type soft
+    python convert_spine-generic_to_nnUNetv2.py --path-data <path-to-the-copied-dataset> --split 0.8 0.2 --label-suffix seg-manual --contrast T1w T2w --path-out ${nnUNet_raw} -dname spineGNoCropSoftAvgBin -dnum <dnum> --seed <nSeed>
     ```
 
     NOTES:
     - `dname` - is the dataset name that nnUNet refers
     - `dnum` or `dataset-number` - is the number associated with the dataset name. The name and number can be anything. 
-    - `label-type` - is the type of labels to be used for training. The original BIDS dataset has both binary (hard) and averaged (soft) labels. Setting this value to `soft` will use the averaged labels. Setting this value to `hard` will use the binary labels.
-    ls
 
 5. Verify that he dataset was converted correctly using this command:
 ```bash
