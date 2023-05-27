@@ -105,23 +105,29 @@ TODO
 
 ## TMP section - TO DO:
 
-- [ ] Prepare Spine Generic dataset for nnU-Net.
-- [ ] Prepare Basel-mp2rage dataset for nnU-Net.
-- [ ] Prepare INSPIRED dataset for nnU-Net.
-- [ ] Prepare SCI-Colorado dataset for nnU-Net.
-- [ ] Merge + prepare Spine Generic, INSPIRED, SCI-Colorado datasets into one nnunet dataset.
-- [ ] Clean script to merge datasets + add doc.
-- [ ] Run nnunet preprocessing on Spine Generic.
-- [ ] Run nnunet preprocessing on SCI-Colorado.
-- [ ] Run nnunet preprocessing on INSPIRED.
-- [ ] Run nnunet preprocessing on merged daatset.
-- [ ] Train single model on SCI-Colorado.
-- [ ] Train single model on INSPIRED.
-- [ ] Train single model on Spine Generic.
+- [x] Prepare Spine Generic dataset for nnU-Net.
+- [x] Prepare Basel-mp2rage dataset for nnU-Net.
+- [x] Prepare INSPIRED dataset for nnU-Net.
+- [x] Prepare SCI-Colorado dataset for nnU-Net.
+- [x] Prepare canproco dataset for nnU-Net.
+- [x] Merge + prepare Spine Generic, INSPIRED, canproco, SCI-Colorado datasets into one nnunet dataset.
+- [x] Clean script to merge datasets + add doc.
+- [x] Run nnunet preprocessing on Spine Generic.
+- [x] Run nnunet preprocessing on SCI-Colorado.
+- [x] Run nnunet preprocessing on INSPIRED.
+- [x] Reorient to RPI and resample data and labels for canproco.
+- [x] Run nnunet preprocessing on canproco.
+- [x] Reorient to RPI data and labels Basel-mp2rage
+- [x] Run nnunet preprocessing on merged dataset.
+- [x] Train single model on SCI-Colorado.
+- [x] Train single model on INSPIRED.
+- [x] Train single model on Spine Generic.
+- [ ] Train single model on canproco.
 - [ ] Train large nnunet on merged dataset.
 - [ ] Test all models on INSPIRED.
 - [ ] Test all models on SCI-Colorado
 - [ ] Test all models on Spine Generic
+- [ ] Test all models on canproco
 - [ ] Test all models on Basel-mp2rage
 - [ ] Build qualitative and quantitative analysis notebook.
 - [ ] Work on presentation.

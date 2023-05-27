@@ -32,9 +32,10 @@ To install hiddenlayer,
 ### Data and model preparation
 The source data are from:
 1. The [spine-generic multi-subject](https://github.com/spine-generic/data-multi-subject/) dataset.
-2. The INSPIRED dataset, `duke:mri/INSPIRED`.
-3. The [SCI-Colorado](https://github.com/ivadomed/model_seg_sci) dataset, `data:datasets/sci-colorado`.
-4. The [Basel-mp2rage](https://github.com/ivadomed/model_seg_ms_mp2rage) dataset, `git@data:datasets/basel-mp2rage`.
+2. The INSPIRED dataset, `git@data:datasets/inspired`.
+3. The [SCI-Colorado](https://github.com/ivadomed/model_seg_sci) dataset, `git@data:datasets/sci-colorado`.
+4. The [Canproco](https://bmcneurol.biomedcentral.com/articles/10.1186/s12883-021-02447-7) dataset, `git@data:datasets/canproco`
+5. The [Basel-mp2rage](https://github.com/ivadomed/model_seg_ms_mp2rage) dataset, `git@data:datasets/basel-mp2rage`.
 
 #### Preparing nnU-Net data (from BIDS)
 1. Install the BIDS dataset on your machine either through git-annex or downloading it.
@@ -62,6 +63,11 @@ The source data are from:
     - `split` is the training/testing split.
     - `label-suffix` is the label sufix used in the BIDS dataset, for example it could be something like `seg-manual`. It is the last part of your image name after the contrast.
     - To work with more than one dataset, simply run this command for all datasets using the same `dname` and `dnum`, and then edit the produced `dataset.json` within the output folder with the correct number of training and testing examples adding all dataset examples.
+    - Ensure all datasets use the same orientation (e.g. RPI)!
+        - Here's a bash command to re-orient data in the BIDS format using SCT that may be useful.
+        ```
+        for file in sub*/anat/*.nii.gz;do sct_image -i ${file} -setorient RPI -o ${file}; done
+        ``` 
 
 5. Verify that he dataset was converted correctly using this command:
 ```bash
