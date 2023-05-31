@@ -162,3 +162,5 @@ cython_debug/
 #Data
 data
 
+scripts/joblibs
+tests
