@@ -19,6 +19,8 @@ Required: Conda.
 2. Install the requirements running the command below in the home directory of this github repository.
 `pip install -r requirements.txt`
 
+    - Note: You may want to install the nnUnet by [cloning the repository instead](https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/installation_instructions.md) to have more control on the training parameters!
+
 3. nnU-Net needs to know where you intend to save raw data, preprocessed data and trained models. For this you need to set a few environment variables. Please follow the instructions [here](https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/set_environment_variables.md).
 
 4. (OPTIONAL) Install [hiddenlayer](https://github.com/waleedka/hiddenlayer). hiddenlayer enables nnU-net to generate
@@ -92,5 +94,8 @@ CUDA_VISIBLE_DEVICES=X nnUNetv2_predict -i ${nnUNet_raw}/Dataset713_spineGNoCrop
 
 This commands runs the inference on the test set specified by the `imagesTs/` folder and saves the results in the `test/` folder in the results corresponding to the dataset. An example of `<dnum_and_dataset_name>` is `Dataset713_spineGNoCropSoftAvgBin`.
 
+2. Calculate metrics using the `compute_test_metrics_anima.py` script and following the steps in the heading of the script and adapt it to your dataset and model and paths.
 
+```bash
 
+```

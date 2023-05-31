@@ -104,7 +104,7 @@ TODO
 TODO
 
 ## TMP section - TO DO:
-
+(TO DO JUNE 2)
 - [x] Prepare Spine Generic dataset for nnU-Net.
 - [x] Prepare Basel-mp2rage dataset for nnU-Net.
 - [x] Prepare INSPIRED dataset for nnU-Net.
@@ -122,15 +122,28 @@ TODO
 - [x] Train single model on SCI-Colorado.
 - [x] Train single model on INSPIRED.
 - [x] Train single model on Spine Generic.
-- [ ] Train single model on canproco.
-- [ ] Train large nnunet on merged dataset.
-- [ ] Test all models on INSPIRED.
-- [ ] Test all models on SCI-Colorado
-- [ ] Test all models on Spine Generic
-- [ ] Test all models on canproco
-- [ ] Test all models on Basel-mp2rage
+- [x] Train single model on canproco.
+- [ ] Train large nnunet on merged dataset - 1600 -> 2000+ epochs instead of 1k -> could not converge.
+- [x] Test all models on INSPIRED.
+- [x] Test all models on SCI-Colorado
+- [x] Test all models on Spine Generic
+- [x] Test all models on canproco
+- [x] Test all models on Basel-mp2rage
 - [ ] Build qualitative and quantitative analysis notebook.
 - [ ] Work on presentation.
+
+(TO DO JUNE 9)
 - [ ] Clean code.
 - [ ] Improve documentation to reproduce everything.
 - [ ] Write project report.
+- [ ] Finish README for using the script
+- [ ] Finish README for the whole project recap.
+- [ ] Implement below additions to the README
+- [ ] Use of open-science best practices: Expectation: the project uses 3 open-science tools learnt during week 1, or provides a convincing reason to not use them. The 3 tools may be selected in the following list, but other relevant tools will be accepted too. -Git-GitHub-Containers -Python-BIDS-Jupyter notebooks-Binder
+- [ ] Skills and technologies learnt Expectation: the project uses 1 skill, method or technology learnt by the student during the school, through formal presentations or informal interactions. The skill, method or technology may be selected in the following list, but other relevant ones will be accepted too. -Machine learning -Multivariate statistics and matrix factorizations -Estimation of connectivity -High-performance computing -DataLad
+- [ ] Project relevance: Expectation: the project is relevant to brain/CNS imaging data analysis.
+- [ ] Clarity Expectation: the README/presentation is easy to follow, and supported by convincing material (e.g., images, diagrams, text, graphs).
+- [ ] Highly reproducible project (0-1)
+- [ ] Technological achievement (0-1)
+- [ ] Exciting presentation (0-1)
+- [ ] Nice brain picture (0-1)
