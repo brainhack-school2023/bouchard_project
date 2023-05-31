@@ -162,5 +162,4 @@ cython_debug/
 #Data
 data
 
-scripts/joblibs
-tests
+scripts/joblibs/
