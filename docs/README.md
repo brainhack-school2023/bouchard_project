@@ -94,8 +94,8 @@ CUDA_VISIBLE_DEVICES=X nnUNetv2_predict -i ${nnUNet_raw}/Dataset713_spineGNoCrop
 
 This commands runs the inference on the test set specified by the `imagesTs/` folder and saves the results in the `test/` folder in the results corresponding to the dataset. An example of `<dnum_and_dataset_name>` is `Dataset713_spineGNoCropSoftAvgBin`.
 
-2. Calculate metrics using the `compute_test_metrics_anima.py` script and following the steps in the heading of the script and adapt it to your dataset and model and paths.
+2. Calculate metrics from the predictions in the first step using the `compute_test_metrics_anima.py` script and following the steps in the heading of the script and adapt it to your data paths.
 
 ```bash
-
+python compute_test_metrics_anima.py --pred-folder <prediction_path> --gt-folder <GT_path> -dname <dataset_name_for_pred_data> -o <output_path>
 ```
