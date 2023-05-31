@@ -25,3 +25,7 @@ nvidia-nvtx-cu11==11.7.91
 torch==2.0.0
 tqdm==4.65.0
 
+
+# For data analysis notebook
+ipykernel
+nilearn
