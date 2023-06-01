@@ -1,6 +1,0 @@
-Model trained on...,Mean Dice (ideal 1),Std,Relative Volume Error (ideal 0),Std
-Spine Generic,0.962,0.019,0.77,5.044
-Inspired,0.431,0.402,-44.738,47.164
-Canproco,0.302,0.342,-40.878,43.163
-sci-colorado,0.721,0.326,-8.639,46.352
-All Aggregated,0.958,0.039,-0.487,4.41

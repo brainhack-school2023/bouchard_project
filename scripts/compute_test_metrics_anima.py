@@ -255,7 +255,7 @@ def get_test_metrics_by_dataset(pred_folder, gt_folder, data_set):
         return subject_sc_filepaths, subject_lesion_filepaths
 
 
-    elif data_set in ["spine-generic", "dcm-zurich", "sci-colorado", "canproco", "basel_mp2rage", "inspired"]:
+    elif data_set in ["spine-generic", "dcm-zurich", "sci-colorado", "canproco", "basel_mp2rage", "inspired","fmri"]:
         if data_set == 'spine-generic':
             data_set = 'spineGNoCropSoftAvgBin'
             args.dataset_name = 'spineGNoCropSoftAvgBin'
