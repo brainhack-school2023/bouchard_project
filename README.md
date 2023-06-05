@@ -135,7 +135,7 @@ I wanted to highlight some limitations of this project like the fact that the da
 
 Still, the goal of this project was to learn how to use nnU-Net, improve my git, github and git-annex skills and improve my understanding of MRIs, contrasts and spinal cord segmentation. In those terms, the project was a success and is a promising start for my PhD work.
 
-## TMP section - TO DO:
+## Section - TO DO:
 (TO DO JUNE 2)
 - [x] Prepare Spine Generic dataset for nnU-Net.
 - [x] Prepare Basel-mp2rage dataset for nnU-Net.
@@ -176,6 +176,6 @@ Still, the goal of this project was to learn how to use nnU-Net, improve my git,
 - [x] Project relevance: Expectation: the project is relevant to brain/CNS imaging data analysis.
 - [x] Clarity Expectation: the README/presentation is easy to follow, and supported by convincing material (e.g., images, diagrams, text, graphs).
 - [x] Highly reproducible project (0-1)
-- [ ] Technological achievement (0-1)
+- [x] Technological achievement (0-1)
 - [x] Exciting presentation (0-1)
-- [ ] Nice brain picture (0-1)
+- [x] Nice brain picture (0-1)
