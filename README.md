@@ -43,6 +43,10 @@ Typically, we use one model per data sub-set to reduce the complexity of the tas
 
 My goal is to build a more general model to automatically perform spinal cord segmentation across contrasts, vendors and pathologies.
 
+Below is a visual example of the segmentation result on one subject using a contrast outside of the training scheme comparing the ground truth or manual segmentation (left) with the aggregated model (center) and one of the specific models (right).
+
+![Visual result example](images/result_basel_visual.gif)
+
 ### Tools
 
 Main tools: Python/Pytorch/Git/ssh/Jupyter Notebooks
