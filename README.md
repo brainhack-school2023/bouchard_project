@@ -81,7 +81,7 @@ Test datasets (outside training distribution):
 ### Deliverables
 
 * A Github repository with codes and scripts to reproduce training and testing `github.com/brainhack-school2023/bouchard_project`.
-* A [jupyter notebook](https://github.com/brainhack-school2023/bouchard_project/blob/main/results/results_analysis.ipynb) of the analysis codes and visualisations for comparing the results.
+* A [jupyter notebook](https://github.com/brainhack-school2023/bouchard_project/blob/main/results/results_analysis.ipynb) of the analysis codes and visualizations for comparing the results.
 * Documentation. This README file and the README in `docs/`.
 * Model checkpoints for the nnUnet models trained on all 4 datasets (right now available on /duke for Neuropoly members).
 
@@ -89,7 +89,7 @@ Test datasets (outside training distribution):
 
 ### Progress overview
 
-The project was initiated by Louis-François Bouchard, based on the existing BrainHack template. I started from existing scripts for the nnU-Net method and adapt them for my needs. There are now all necessary updated scripts in the `scripts` folder and documentation in `docs` through a clear README file to reproduce the project. A notebook is available with all results as well as the final project presentation powerpoint for more information. Ultimately, the project is a success and the hypothesis (aggregating datasets == better general model) was confirmed.
+The project was initiated by Louis-François Bouchard, based on the existing BrainHack template. I started from existing scripts for the nnU-Net method and adapted them for my needs. There are now all necessary updated scripts in the `scripts` folder and documentation in `docs` through a clear README file to reproduce the project. A notebook is available with all results as well as the final project presentation powerpoint for more information. Ultimately, the project was a success and the hypothesis (aggregating datasets == better general model) was confirmed.
 
 ### Tools I learned during this project
 
@@ -105,8 +105,8 @@ This README along with the README in the `docs` folder allows anyone to reproduc
 
 #### Deliverable 2: A notebook with results analysis
 
-The deliverable 2 is available in the [results/](https://github.com/brainhack-school2023/bouchard_project/tree/main/results) folder where I show both quantitative (mean dice results) and qualitative (visual results) results of he different (3) experiments. 
-The experiments were (i) to compare thegeneral model to specific models on their respective tasks (e.g. compare the general model to the spine generic-trained model on the spine generic test set to see if the general model kept a similar "understanding" of this sub-set of the data), (ii) compare the general model to the specific models to two unseen sets of data (with unseen image contrasts), including the Basel dataset with MP2RAGE contrast and [Rohan](https://github.com/brainhack-school2023/banerjee_project)'s fMRI test set with EPI-GRE contrast.
+The deliverable 2 is available in the [results/](https://github.com/brainhack-school2023/bouchard_project/tree/main/results) folder where I show both quantitative (mean dice results) and qualitative (visual results) results of the different (3) experiments. 
+The experiments were (i) to compare the general model to specific models on their respective tasks (e.g. compare the general model to the spine generic-trained model on the spine generic test set to see if the general model kept a similar "understanding" of this sub-set of the data), (ii) compare the general model to the specific models to two unseen sets of data (with unseen image contrasts), including the Basel dataset with MP2RAGE contrast and [Rohan](https://github.com/brainhack-school2023/banerjee_project)'s fMRI test set with EPI-GRE contrast.
 
 Bellow is the most important outcome, showing how the aggregated (or general) model outperforms specific models on unseen data, here reporting the mean dice over the Basel-MP2RAGE dataset, which uses a contrast (MP2RAGE) that was not seen in any training scheme prior testing.
 
@@ -127,9 +127,9 @@ Right now the models are available on `duke/` for Neuropoly students. An improve
 
 To conclude, I believe this project was a success, showing how aggregating datasets can build a more general model while keeping the "specialized capabilities" similar. Adding more diverse data is a promising next step to further improve the model as well as performing proper visual analysis and cross-validation to ensure the validity of the results and better understand the results' quality and problems to solve.
 
-I wanted to highlight some limitations of this project like the fact that the datasets are of various sizes, which may hurt the comparison. Likewise, most daatset use the T2w contrast only, which is not ideal for building a more general model, but was the only way to correctly split our dataset and keep contrast "not seen in training" outside any training frameworks and only in our testing datasets. Finally, the time constraints didn't allow me to perform proper cross-validation of the different models as well as in-depth analysis of the results visually, as mentioned above for an interesting next step.
+I wanted to highlight some limitations of this project like the fact that the datasets are of various sizes, which may hurt the comparison. Likewise, most datasets use the T2w contrast only, which is not ideal for building a more general model, but was the only way to correctly split our dataset and keep contrast "not seen in training" outside any training frameworks and only in our testing datasets. Finally, the time constraints didn't allow me to perform proper cross-validation of the different models as well as in-depth analysis of the results visually, as mentioned above for an interesting next step.
 
-Still, the goal of this project was to learn how to use nnU-Net, improve my git, github and git-annex skills and improve my understanding of MRIs, contrasts and spinal cord segmentation. In thsoe terms, the project was a success and is a promising start for my PhD work.
+Still, the goal of this project was to learn how to use nnU-Net, improve my git, github and git-annex skills and improve my understanding of MRIs, contrasts and spinal cord segmentation. In those terms, the project was a success and is a promising start for my PhD work.
 
 ## TMP section - TO DO:
 (TO DO JUNE 2)
@@ -163,10 +163,10 @@ Still, the goal of this project was to learn how to use nnU-Net, improve my git,
 (TO DO JUNE 9)
 - [x] Clean code.
 - [x] Improve documentation to reproduce everything.
-- [ ] Write project report.
+- [x] Write project report.
 - [x] Finish README for using the script
-- [ ] Finish README for the whole project recap.
-- [ ] Implement below additions to the README
+- [x] Finish README for the whole project recap.
+- [x] Implement below additions to the README
 - [x] Use of open-science best practices: Expectation: the project uses 3 open-science tools learnt during week 1, or provides a convincing reason to not use them. The 3 tools may be selected in the following list, but other relevant tools will be accepted too. -Git-GitHub-Containers -Python-BIDS-Jupyter notebooks-Binder
 - [x] Skills and technologies learnt Expectation: the project uses 1 skill, method or technology learnt by the student during the school, through formal presentations or informal interactions. The skill, method or technology may be selected in the following list, but other relevant ones will be accepted too. -Machine learning -Multivariate statistics and matrix factorizations -Estimation of connectivity -High-performance computing -DataLad
 - [x] Project relevance: Expectation: the project is relevant to brain/CNS imaging data analysis.
